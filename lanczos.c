@@ -1,6 +1,7 @@
 #include <math.h>
 #include <complex.h>
 
+
 const double g = 1;
 
 const double c[] = {
@@ -14,30 +15,27 @@ const double c[] = {
     33.28472248815523926168680191040039062500000000000000,
     -30.7328214590961579233407974243164062500000000000000,
     15.70077904063509777188301086425781250000000000000000,
-    -3.40185381879564374685287475585937500000000000000000}
+    -3.40185381879564374685287475585937500000000000000000};
 
-double gamma_x(double rez, double imz) {
-    if (rez < 0) {
+double complex cgamma(double rez, double imz) {
+    if (rez < 1) {
+        double complex z = rez + imz * I;
         // Apply reflection formula for negative base
-        // complex<double> z = (rez - 1) + imz;
-        // return M_PI * z / sin(M_PI * z) * gamma(-rez, imz)
+        return M_PI / csin(M_PI * z) * cgamma(-creal(z) + 1, cimag(z));
     }
     else {
-        complex<double> z = (rez - 1) + imz;
-        // z = complex(z) - 1  # Lanzcos solves for gamma(z + 1)
+        // Lanzcos solves for gamma(z + 1)
+        double complex z = (rez - 1) + imz * I;
 
-        series = c[0]
+        double complex series = c[0];
         for(int i = 1; i < sizeof(c)/sizeof(double); i++) {
-            series += c[i]/(z + i)
+            series += c[i]/(z + i);
         }
-
-        double t = z + g + 0.5;
-        prod = sqrt(2 * pi) * t ** (z + 0.5) * exp(-t) * series;
-        return prod
+        double complex t = z + g + 0.5;
+        return sqrt(2 * M_PI) * cpow(t, (z + 0.5)) * cexp(-t) * series;
     }
-    return 0;
 }
 
-int main() {
-    return 0;
+double gamma(double rez) {
+    return creal(cgamma(rez, 0));
 }

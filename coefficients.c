@@ -1,5 +1,4 @@
 #include <math.h>
-#include <complex.h>
 #include <stdio.h>
 
 /*
@@ -64,7 +63,7 @@ double p_coefficients(int k, double g) {
     return p;
 }
 
-// Computes coefficient for series in the Lanczos formula
+// Computes coefficient for partial fraction series in the Lanczos formula
 double c_coefficients(int index, double g){
     double c = 0;
     for(int i = 0; i < sizeof(partials[0])/sizeof(double); i++) {
@@ -74,29 +73,9 @@ double c_coefficients(int index, double g){
 }
 
 int main() {
-    // printf("%f\n", pow(2, 3));
-    // printf("%d\n", chebyshev(15, 11));
-    // printf("%d\n", chebyshev(15, 13));
-    // printf("%d\n", chebyshev(15, 15));
-    // printf("%.51lf\n", exp(1));
-    // printf("%ld\n", sizeof(partials[0])/sizeof(double));
-    // printf("%.51lf\n", M_PI);
-    // printf("%.51lf\n", p_coefficients(7, 1));
-    // printf("%d\n", factorial(14));
-    //printf("%f\n", pow(4, 7));
-    // printf("%.51lf\n", gamma_identity(7));
     double g = 1;
-    printf("%.51lf\n", c_coefficients(0, g));
-    printf("%.51lf\n", c_coefficients(1, g));
-    printf("%.51lf\n", c_coefficients(2, g));
-    printf("%.51lf\n", c_coefficients(3, g));
-    printf("%.51lf\n", c_coefficients(4, g));
-    printf("%.51lf\n", c_coefficients(5, g));
-    printf("%.51lf\n", c_coefficients(6, g));
-    printf("%.51lf\n", c_coefficients(7, g));
-    printf("%.51lf\n", c_coefficients(8, g));
-    printf("%.51lf\n", c_coefficients(9, g));
-    printf("%.51lf\n", c_coefficients(10, g));
-    // printf("%ld\n", sizeof(partials[0])/sizeof(double));
+    for(int i = 0; i < sizeof(partials[0])/sizeof(double); i++) {
+        printf("%.51lf\n", c_coefficients(i, g));
+    }
     return 0;
 }
